@@ -40,7 +40,7 @@ Node FindNode(GameObject id)
         return null;
     }
 
-public bool AStar(GameObject starId, GameObject endId)
+public bool AStar(GameObject startId, GameObject endId)
     {
         Node start = FindNode(startId);
         Node end = FindNode(endId);
@@ -53,14 +53,14 @@ public bool AStar(GameObject starId, GameObject endId)
         List<Node> open = new List<Node>();
         List<Node> closed = new List<Node>();
         float tentative_g_score = 0;
-        bool tentaive_is_better;
+        bool tentative_is_better;
 
         start.g = 0;
         start.h = distance(start, end);
         start.f = start.h;
 
         open.Add(start);
-        whlle(open.Coung > 0);
+        while(open.Count > 0)
         {
            int i = lowestF(open);
            Node thisNode = open[i];
@@ -73,7 +73,7 @@ public bool AStar(GameObject starId, GameObject endId)
             open.RemoveAt(i);
             closed.Add(thisNode);
             Node neighbour;
-            foreach(Edge e in this.Node.edgeList)
+            foreach(Edge e in thisNode.edgeList)
             {
                 neighbour = e.endNode;
 
@@ -84,16 +84,16 @@ public bool AStar(GameObject starId, GameObject endId)
                 if (open.IndexOf(neighbour) == -1)
                 {
                     open.Add(neighbour);
-                    tentaive_is_better = true;
+                    tentative_is_better = true;
                 }
                 else if (tentative_g_score < neighbour.g)
                 {
-                    tentaive_is_better = true;
+                    tentative_is_better = true;
                 }
                 else
-                    tentaive_is_better = false;
+                    tentative_is_better = false;
 
-                if(tentative_is_better)
+                if (tentative_is_better)
                 {
                     neighbour.cameFrom = thisNode;
                     neighbour.g = tentative_g_score;
